@@ -11,6 +11,8 @@
     <script src="js/freeboard.thirdparty.min.js"></script>
     <script type="text/javascript">
         head.js("js/freeboard_plugins.min.js",
+                "js/thirdparty.plugins.min.js",
+
                 // *** Load more plugins here ***
                 function(){
                     $(function()
@@ -28,6 +30,7 @@
 
                     });
                 });
+
     </script>
 </head>
 <body>
@@ -45,12 +48,22 @@
                 <h1 id="board-logo" class="title bordered">freeboard</h1>
                 <div id="board-actions">
                     <ul class="board-toolbar vertical">
-                        <li data-bind="click: loadDashboardFromLocalFile"><i id="full-screen-icon" class="icon-folder-open icon-white"></i><label id="full-screen">Load Freeboard</label></li>
+                        <li data-bind="click: clearDashboard">
+                            <i class="icon-file icon-white"></i>
+                            <label id="new-dashboard">New Dashboard</label>
+                        </li>
+                        <li data-bind="click: loadDashboardFromLocalFile">
+                            <i class="icon-folder-open icon-white"></i>
+                            <label id="load-dashboard">Load Dashboard</label>
+                        </li>
                         <li><i class="icon-download-alt icon-white"></i>
-                            <label data-bind="click: saveDashboardClicked">Save Freeboard</label>
+                            <label data-bind="click: saveDashboardClicked">Save Dashboard</label>
                             <label style="display: none;" data-bind="click: saveDashboard" data-pretty="true">[Pretty]</label>
                             <label style="display: none;" data-bind="click: saveDashboard" data-pretty="false">[Minified]</label>
                         </li>
+                    </ul>
+                    <ul class="board-toolbar vertical">
+                        <li id="dev-console-toolbar"><i style="background-image:url(img/glyphicons-blackboard.png);width:14px;height:14px"></i><label onclick="freeboard.showDeveloperConsole()">Developer Console</label></li>
                         <li id="add-pane" data-bind="click: createPane"><i class="icon-plus icon-white"></i><label>Add Pane</label></li>
                     </ul>
                 </div>
@@ -105,6 +118,27 @@
 <div style="display:hidden">
     <ul data-bind="template: { name: 'pane-template', foreach: panes}">
     </ul>
+</div>
+
+<div id="footer-bar">
+    <div id="footer-menu">
+        <a href="/account"><h3 id="footer-logo" class="title bordered">freeboard</h3></a>
+        <div id="board-title">Tutorial</div>
+        <ul id="footer-toolbar" class="board-toolbar">
+            <li id="full-screen-action" onclick="toggleFullScreen()">
+                <i id="full-screen-icon" class="icon-resize-full icon-white"></i>
+                <label id="full-screen">Fullscreen</label>
+            </li>
+            <li id="share-action">
+                <i class="icon-user icon-white"></i>
+                <label>Share</label>
+            </li>
+            <li id="clone-action">
+                <i class="icon-adjust icon-white"></i>
+                <label>Clone</label>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <script type="text/html" id="pane-template">

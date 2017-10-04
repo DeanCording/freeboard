@@ -29,6 +29,34 @@
 
 		updateRefresh(currentSettings.refresh * 1000);
 
+	this.send = function(value) {
+			var requestURL = currentSettings.url;
+
+			if (errorStage == 2 && currentSettings.use_thingproxy) {
+				requestURL = (location.protocol == "https:" ? "https:" : "http:") + "//thingproxy.freeboard.io/fetch/" + encodeURI(currentSettings.url);
+			}
+
+			$.ajax({
+				url: requestURL,
+				type: "POST",
+				data: { value: value },
+				beforeSend: function (xhr) {
+					try {
+                        _.each(currentSettings.headers, function (header) {
+							var name = header.name;
+							var value = header.value;
+
+							if (!_.isUndefined(name) && !_.isUndefined(value)) {
+								xhr.setRequestHeader(name, value);
+							}
+						});
+					}
+					catch (e) {
+					}
+				},
+			})
+		}
+
 		this.updateNow = function () {
 			if ((errorStage > 1 && !currentSettings.use_thingproxy) || errorStage > 2) // We've tried everything, let's quit
 			{
@@ -1321,11 +1349,15 @@ freeboard.loadDatasourcePlugin({
         {
             if(widgetElement && imageURL)
             {
-                var cacheBreakerURL = imageURL + (imageURL.indexOf("?") == -1 ? "?" : "&") + Date.now();
+                var cacheBreakerURL = imageURL + (imageURL.indexOf("?") == -1 ? "?" : "&") + Date.now(),
+                    img = new Image();
 
-                $(widgetElement).css({
-                    "background-image" :  "url(" + cacheBreakerURL + ")"
-                });
+                img.onload = function() {
+                    $(widgetElement).css({
+                        "background-image" :  "url(" + cacheBreakerURL + ")"
+                    });
+                }
+                img.src = cacheBreakerURL;
             }
         }
 

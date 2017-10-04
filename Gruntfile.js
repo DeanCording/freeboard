@@ -5,14 +5,14 @@ module.exports = function(grunt) {
             css: {
                 src: [
                     'lib/css/thirdparty/*.css',
-                    'lib/css/freeboard/styles.css'
+                    'lib/css/freeboard/*.css'
                 ],
                 dest: 'css/freeboard.css'
             },
             thirdparty : {
                 src : [
                     [
-                        'lib/js/thirdparty/head.js',
+                       'lib/js/thirdparty/head.js',
                         'lib/js/thirdparty/jquery.js',
                         'lib/js/thirdparty/jquery-ui.js',
                         'lib/js/thirdparty/knockout.js',
@@ -21,23 +21,14 @@ module.exports = function(grunt) {
                         'lib/js/thirdparty/jquery.caret.js',
 						'lib/js/thirdparty/jquery.xdomainrequest.js',
                         'lib/js/thirdparty/codemirror.js',
+                        'lib/js/thirdparty/paho-mqtt-min.js'
                     ]
                 ],
                 dest : 'js/freeboard.thirdparty.js'
             },
 			fb : {
 				src : [
-					'lib/js/freeboard/DatasourceModel.js',
-					'lib/js/freeboard/DeveloperConsole.js',
-					'lib/js/freeboard/DialogBox.js',
-					'lib/js/freeboard/FreeboardModel.js',
-					'lib/js/freeboard/FreeboardUI.js',
-					'lib/js/freeboard/JSEditor.js',
-					'lib/js/freeboard/PaneModel.js',
-					'lib/js/freeboard/PluginEditor.js',
-					'lib/js/freeboard/ValueEditor.js',
-					'lib/js/freeboard/WidgetModel.js',
-					'lib/js/freeboard/freeboard.js',
+					'lib/js/freeboard/*.js'
 				],
 				dest : 'js/freeboard.js'
 			},
@@ -47,10 +38,16 @@ module.exports = function(grunt) {
                 ],
                 dest : 'js/freeboard.plugins.js'
             },
+            'thirdparty_plugins' : {
+                src : [
+                    'plugins/thirdparty/*.js'
+                ],
+                dest : 'js/thirdparty.plugins.js'
+            },
             'fb_plugins' : {
                 src : [
                     'js/freeboard.js',
-                    'js/freeboard.plugins.js'
+                    'js/freeboard.plugins.js',
                 ],
                 dest : 'js/freeboard_plugins.js'
             }
@@ -86,6 +83,11 @@ module.exports = function(grunt) {
                 files: {
                     'js/freeboard_plugins.min.js' : [ 'js/freeboard_plugins.js' ]
                 }
+            },
+            'thirdparty_plugins': {
+                files: {
+                    'js/thirdparty.plugins.min.js' : [ 'js/thirdparty.plugins.js' ]
+                }
             }
         },
         'string-replace': {
@@ -108,5 +110,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-string-replace');
-    grunt.registerTask('default', [ 'concat:css', 'cssmin:css', 'concat:fb', 'concat:thirdparty', 'concat:plugins', 'concat:fb_plugins', 'uglify:fb', 'uglify:plugins', 'uglify:fb_plugins', 'uglify:thirdparty', 'string-replace:css' ]);
+    grunt.registerTask('default', [ 'concat:css', 'cssmin:css', 'concat:fb', 'concat:thirdparty', 'concat:plugins', 'concat:fb_plugins', 'concat:thirdparty_plugins', 'uglify:fb', 'uglify:plugins', 'uglify:fb_plugins', 'uglify:thirdparty_plugins','uglify:thirdparty', 'string-replace:css' ]);
 };
