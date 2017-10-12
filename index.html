@@ -9,29 +9,11 @@
     <meta name="viewport" content = "width = device-width, initial-scale = 1, user-scalable = no" />
     <link href="css/freeboard.min.css" rel="stylesheet" />
     <script src="js/freeboard.thirdparty.min.js"></script>
-    <script type="text/javascript">
-        head.js("js/freeboard_plugins.min.js",
-                "js/thirdparty.plugins.min.js",
 
-                // *** Load more plugins here ***
-                function(){
-                    $(function()
-                    { //DOM Ready
-                        freeboard.initialize(true);
+    <script src="js/freeboard_plugins.min.js"></script>
+    <script src="js/thirdparty.plugins.min.js"></script>
+    <!-- Load more plugins here -->
 
-                        var hashpattern = window.location.hash.match(/(&|#)source=([^&]+)/);
-                        if (hashpattern !== null) {
-                            $.getJSON(hashpattern[2], function(data) {
-                                freeboard.loadDashboard(data, function() {
-                                    freeboard.setEditing(false);
-                                });
-                            });
-                        }
-
-                    });
-                });
-
-    </script>
 </head>
 <body>
 <div id="board-content">
@@ -177,6 +159,22 @@
         </section>
     </li>
 </script>
+
+    <script type="text/javascript">
+        $(function() { //DOM Ready
+            freeboard.initialize(true);
+
+            var hashpattern = window.location.hash.match(/(&|#)source=([^&]+)/);
+                if (hashpattern !== null) {
+                    $.getJSON(hashpattern[2], function(data) {
+                        freeboard.loadDashboard(data, function() {
+                            freeboard.setEditing(false);
+                        });
+                    });
+                }
+            });
+
+    </script>
 
 </body>
 </html>

@@ -4,8 +4,11 @@ module.exports = function(grunt) {
         concat: {
             css: {
                 src: [
-                    'lib/css/thirdparty/*.css',
-                    'lib/css/freeboard/*.css'
+                    'lib/css/thirdparty/jquery.gridster.min.css',
+                    'lib/css/thirdparty/codemirror.css',
+                    'lib/css/thirdparty/codemirror-ambiance.css',
+                    'lib/css/freeboard/styles.css',
+                    'lib/css/freeboard/index.css'
                 ],
                 dest: 'css/freeboard.css'
             },
@@ -13,9 +16,9 @@ module.exports = function(grunt) {
                 src : [
                     [
                        'lib/js/thirdparty/head.js',
+                        'lib/js/thirdparty/knockout.js',
                         'lib/js/thirdparty/jquery.js',
                         'lib/js/thirdparty/jquery-ui.js',
-                        'lib/js/thirdparty/knockout.js',
                         'lib/js/thirdparty/underscore.js',
                         'lib/js/thirdparty/jquery.gridster.js',
                         'lib/js/thirdparty/jquery.caret.js',
@@ -28,7 +31,18 @@ module.exports = function(grunt) {
             },
 			fb : {
 				src : [
-					'lib/js/freeboard/*.js'
+                    'lib/js/freeboard/DatasourceModel.js',
+                    'lib/js/freeboard/DeveloperConsole.js',
+                    'lib/js/freeboard/DialogBox.js',
+                    'lib/js/freeboard/FreeboardModel.js',
+                    'lib/js/freeboard/FreeboardUI.js',
+                    'lib/js/freeboard/JSEditor.js',
+                    'lib/js/freeboard/PaneModel.js',
+                    'lib/js/freeboard/PluginEditor.js',
+                    'lib/js/freeboard/ValueEditor.js',
+                    'lib/js/freeboard/WidgetModel.js',
+                    'lib/js/freeboard/freeboard.js',
+                    'lib/js/freeboard/index.js'
 				],
 				dest : 'js/freeboard.js'
 			},
@@ -40,14 +54,25 @@ module.exports = function(grunt) {
             },
             'thirdparty_plugins' : {
                 src : [
-                    'plugins/thirdparty/*.js'
+                    'plugins/thirdparty/raphael.js',
+                    'plugins/thirdparty/justgage.js',
+                    'plugins/thirdparty/highcharts.js',
+                    'plugins/thirdparty/exporting.js',
+                    'plugins/thirdparty/jquery.sparkline.min.js',
+                    'plugins/thirdparty/ibm.iotfoundation.plugin.js',
+                    'plugins/thirdparty/paho.mqtt.plugin.js',
+                    'plugins/thirdparty/highcharts.plugin.js',
+                    'plugins/thirdparty/interactive.gauge.plugin.js',
+                    'plugins/thirdparty/interactive.indicator.plugin.js',
+                    'plugins/thirdparty/osinfo.datasources.js',
+                    'plugins/thirdparty/html.widgets.js',
                 ],
                 dest : 'js/thirdparty.plugins.js'
             },
             'fb_plugins' : {
                 src : [
                     'js/freeboard.js',
-                    'js/freeboard.plugins.js',
+                    'js/freeboard.plugins.js'
                 ],
                 dest : 'js/freeboard_plugins.js'
             }
@@ -110,8 +135,9 @@ module.exports = function(grunt) {
                     mode: 'zip'
                 },
                 files: [
-                    {src: ['index.html','js/freeboard_plugins.min.js','js/thirdparty.plugins.min.js',
-                        'js/freeboard.thirdparty.min.js', 'css/freeboard.min.css', 'img/*']}
+                    {src: ['package.json','index.html','js/freeboard_plugins.min.js',
+                        'js/thirdparty.plugins.min.js','js/freeboard.thirdparty.min.js',
+                        'css/freeboard.min.css', 'img/*']}
                 ]
             }
         }
