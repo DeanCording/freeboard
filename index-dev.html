@@ -17,6 +17,7 @@
     <script type="text/javascript">
         head.js("lib/js/thirdparty/knockout.js",
                 "lib/js/thirdparty/jquery.js",
+
                 "lib/js/thirdparty/jquery-ui.js",
                 "lib/js/thirdparty/underscore.js",
                 "lib/js/thirdparty/jquery.gridster.js",
@@ -45,7 +46,6 @@
                 "plugins/thirdparty/highcharts.plugin.js",
                 "plugins/thirdparty/interactive.gauge.plugin.js",
                 "plugins/thirdparty/interactive.indicator.plugin.js",
-
                 // *** Load more plugins here ***
                 function(){
                     $(function()
@@ -149,7 +149,7 @@
 	</div>
 </header>
 
-<div style="display:hidden">
+<div style="display:hidden" >
     <ul data-bind="template: { name: 'pane-template', foreach: panes}">
     </ul>
 </div>

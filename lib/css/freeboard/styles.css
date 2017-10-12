@@ -421,7 +421,7 @@ html {
 body {
 	background-color: #101214;
 	color: #8b8b8b;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: 'Arial', sans-serif;
 	font-size: 14px;
 	line-height: 20px;
 	height: 100%;
@@ -562,7 +562,7 @@ input[type="color"],
 	vertical-align: middle;
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
-	border-radius: -px;
+	border-radius: 0px;
 	width: 400px;
 }
 
@@ -769,7 +769,7 @@ a:focus {
 
 .gridster header {
 	background-color: #272727;
-	height: 30px;
+	height: 25px;
 	margin: 0;
 	padding: 0 10px 0 10px;
 	color: #8b8b8b;
@@ -777,13 +777,13 @@ a:focus {
 }
 
 header h1 {
-	font-size: 12px;
+	font-size: 16px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding: 0;
 	margin: 0;
-	line-height: 30px;
+	line-height: 25px;
 }
 
 .gridster section {
@@ -821,9 +821,7 @@ header h1 {
 }
 
 #toggle-header {
-	margin: 0 auto;
-	left: 0;
-	right: 0;
+	float: right;
 	width: 50px;
 	background-color: #313131;
 	text-align: center;
@@ -836,7 +834,7 @@ header h1 {
 }
 
 .widget {
-	padding: 5px 10px 5px 10px;
+	padding: 1px 10px 1px 10px;
 	height: 100%;
 	width: 100%;
 	-moz-box-sizing: border-box;
@@ -930,19 +928,19 @@ header h1 {
 }
 
 .sub-section-height-1 {
-	height: 60px;
+	height: 45px;
 }
 
 .sub-section-height-2 {
-	height: 120px;
+	height: 90px;
 }
 
 .sub-section-height-3 {
-	height: 180px;
+	height: 135px;
 }
 
 .sub-section-height-4 {
-	height: 240px;
+	height: 180px;
 }
 
 .sub-section:last-of-type {
@@ -967,7 +965,7 @@ header h1 {
 	color: #d3d4d4;
 	font-size: 20px;
 	font-weight: 100;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: Arial, sans-serif;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	letter-spacing: 1px;
@@ -1027,7 +1025,7 @@ ul, ol {
 	top: 0;
 }
 
-.gridster .gs_w {
+.gridster .gs-w {
 	background: #2a2a2a;
 	padding: 0px;
 	margin: 0px;
@@ -1053,7 +1051,7 @@ ul, ol {
 	width: 14px;
 	height: 14px;
 	margin-top: 1px;
-	*margin-right: .3em;
+	margin-right: .3em;
 	line-height: 14px;
 	vertical-align: text-top;
 	background-image: url("../../../img/glyphicons-halflings.png");
@@ -1907,7 +1905,7 @@ ul.datasource-input-suffix {
 }
 
 .title {
-	font-family: 'Helvetica-Neue', 'Helvetica', 'Arial', sans-serif;
+	font-family: 'Arial', sans-serif;
 	vertical-align: baseline;
 	-webkit-font-smoothing: antialiased;
 	font-style: normal;
@@ -2234,7 +2232,7 @@ input:-moz-placeholder, textarea:-moz-placeholder {
 	height: 0px;
 	width: 4px;
 	background: transparent;
-	padding-right: 10;
+	padding-right: 10px;
 }
 
 ::-webkit-scrollbar-thumb {

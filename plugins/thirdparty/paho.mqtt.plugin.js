@@ -2,6 +2,8 @@
 
 (function()
 {
+    var instances = 0;
+
 	// ### Datasource Definition
 	//
 	// -------------------
@@ -69,19 +71,18 @@
 		// * **updateCallback** : A callback function that you'll call if and when your datasource has an update for freeboard to recalculate. This function expects a single parameter which is a javascript object with the new, updated data. You should hold on to this reference and call it when needed.
 		newInstance   : function(settings, newInstanceCallback, updateCallback)
 		{
-			newInstanceCallback(new mqttDatasourcePlugin(settings, updateCallback));
+			newInstanceCallback(new mqttDatasourcePlugin(instances++, settings, updateCallback));
 		}
 	});
 
-	var mqttDatasourcePlugin = function(settings, updateCallback)
+	var mqttDatasourcePlugin = function(instance, settings, updateCallback)
 	{
  		var self = this;
 		var data = {};
-
 		var currentSettings = settings;
 		// If defined, will show status in color-coded bar on top of the page.
 		// If you change the element ID, remember to change the CSS, too.
-		var idStatusElement = "mqttconnectionstatus";
+		var idStatusElement = "mqttconnectionstatus"+instance;
 		var selectorStatusElement = "#"+idStatusElement;
 
 		function onConnect() {
@@ -95,7 +96,7 @@
 		                "margin-top": "-30px"
 		            }, 500);
 		        });
-		        $(selectorStatusElement).html('CONNECTED');
+		        $(selectorStatusElement).html(currentSettings.instance_name + ' Connected');
 		    }
 		    
 		    client.subscribe(currentSettings.topic);
@@ -158,7 +159,7 @@
 		// **onSettingsChanged(newSettings)** (required) : A public function we must implement that will be called when a user makes a change to the settings.
 		self.onSettingsChanged = function(newSettings)
 		{
-		    currentSettings = newSettings;
+            currentSettings = newSettings;
 		    data = {};
 		    client.disconnect();
 
@@ -193,6 +194,10 @@
 		        client.disconnect();
 		    }
 		    client = {};
+
+            if (selectorStatusElement) {
+               $(selectorStatusElement).remove();
+            }
 		}
 
 		// Append a random string to the client_id to allow multiple dashboards to share one client_id-setting.
@@ -206,7 +211,7 @@
 		    var content = '<style>'+
 		        selectorStatusElement+' {'+
 		        '    width: 100%;'+
-		        '    height: 40px;'+
+		        '    height: 30px;'+
 		        '    line-height: 35px;'+
 		        '    margin-top: -30px;'+
 		        '    background-color: #AAA;'+

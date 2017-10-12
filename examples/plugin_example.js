@@ -30,6 +30,12 @@
 		],
 		// **settings** : An array of settings that will be displayed for this plugin when the user adds it.
 		"settings"    : [
+        //  Instance name - automatically added
+		//  {
+        //      name : "instance_name",
+        //        display_name : "Name",
+        //        type : "text",
+        //        required : true
 			{
 				// **name** (required) : The name of the setting. This value will be used in your code to retrieve the value specified by the user. This should follow naming conventions for javascript variable and function declarations.
 				"name"         : "first_name",

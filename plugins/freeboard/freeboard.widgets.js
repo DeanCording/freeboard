@@ -8,6 +8,8 @@
 // └────────────────────────────────────────────────────────────────────┘ \\
 
 (function () {
+
+    var ROW_HEIGHT = 45;
 	var SPARKLINE_HISTORY_LENGTH = 100;
 	var SPARKLINE_COLORS = ["#FF9900", "#FFFFFF", "#B3B4B4", "#6B6B6B", "#28DE28", "#13F7F9", "#E6EE18", "#C41204", "#CA3CB8", "#0B1CFB"];
 
@@ -240,11 +242,11 @@
 				unitsElement.hide();
 			}
 
-			var valueFontSize = 30;
+			var valueFontSize = 29;
 
 			if(newSettings.size == "big")
 			{
-				valueFontSize = 75;
+				valueFontSize = 74;
 
 				if(newSettings.sparkline)
 				{
@@ -350,7 +352,7 @@
 
     var gaugeID = 0;
 	freeboard.addStyle('.gauge-widget-wrapper', "width: 100%;text-align: center;");
-	freeboard.addStyle('.gauge-widget', "width:200px;height:160px;display:inline-block;");
+	freeboard.addStyle('.gauge-widget', "width:280px;height:164px;display:inline-block;");
 
     var gaugeWidget = function (settings) {
         var self = this;
@@ -375,9 +377,10 @@
                 id: thisGaugeID,
                 value: (_.isUndefined(currentSettings.min_value) ? 0 : currentSettings.min_value),
                 min: (_.isUndefined(currentSettings.min_value) ? 0 : currentSettings.min_value),
-                max: (_.isUndefined(currentSettings.max_value) ? 0 : currentSettings.max_value),
+                max: (_.isUndefined(currentSettings.max_value) ? 100 : currentSettings.max_value),
                 label: currentSettings.units,
                 showInnerShadow: false,
+                humanFriendly: true,
                 valueFontColor: "#d3d4d4"
             });
         }
@@ -410,7 +413,7 @@
         }
 
         this.getHeight = function () {
-            return 3;
+            return 4;
         }
 
         this.onSettingsChanged(settings);
@@ -420,8 +423,8 @@
         type_name: "gauge",
         display_name: "Gauge",
         "external_scripts" : [
-            "plugins/thirdparty/raphael.2.1.0.min.js",
-            "plugins/thirdparty/justgage.1.0.1.js"
+            "plugins/thirdparty/raphael.js",
+            "plugins/thirdparty/justgage.js"
         ],
         settings: [
             {
@@ -566,8 +569,8 @@
         }
 
         this.render = function (element) {
-            width = $(element).width();
-            height = $(element).height();
+            width = 280;
+            height = 5 * ROW_HEIGHT;
 
             var radius = Math.min(width, height) / 2 - strokeWidth * 2;
 
@@ -612,7 +615,7 @@
         }
 
         this.getHeight = function () {
-            return 4;
+            return 5;
         }
 
         this.onSettingsChanged(settings);
@@ -622,7 +625,7 @@
         type_name: "pointer",
         display_name: "Pointer",
         "external_scripts" : [
-            "plugins/thirdparty/raphael.2.1.0.min.js"
+            "plugins/thirdparty/raphael.js"
         ],
         settings: [
             {

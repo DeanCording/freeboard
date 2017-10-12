@@ -211,7 +211,7 @@
 					}
 				},
 				credits: {
-                                        enabled: false,
+                    enabled: false,
 					style: {
 						color: '#666'
 					}
@@ -353,8 +353,7 @@
 			}
 
 			// Create widget
-			thisWidgetContainer
-				.css('height', 60 * self.getHeight() - 10 + 'px');
+			thisWidgetContainer.css('height', 45 * self.getHeight() + 'px');
 			thisWidgetContainer.css('width', '100%');
 
 			thisWidgetContainer.highcharts({
