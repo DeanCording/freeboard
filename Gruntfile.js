@@ -64,7 +64,7 @@ module.exports = function(grunt) {
                     'plugins/thirdparty/highcharts.plugin.js',
                     'plugins/thirdparty/interactive.gauge.plugin.js',
                     'plugins/thirdparty/interactive.indicator.plugin.js',
-                    'plugins/thirdparty/osinfo.datasources.js',
+                    'plugins/thirdparty/osinfos.datasources.js',
                     'plugins/thirdparty/html.widgets.js',
                 ],
                 dest : 'js/thirdparty.plugins.js'
@@ -137,7 +137,7 @@ module.exports = function(grunt) {
                 files: [
                     {src: ['package.json','index.html','js/freeboard_plugins.min.js',
                         'js/thirdparty.plugins.min.js','js/freeboard.thirdparty.min.js',
-                        'css/freeboard.min.css', 'img/*']}
+                        'css/freeboard.min.css', 'img/*', 'node_modules/os-utils/*']}
                 ]
             }
         }
