@@ -102,13 +102,27 @@ module.exports = function(grunt) {
                     }]
                 }
             }
+        },
+        compress: {
+            main: {
+                options: {
+                    archive: 'freeboard.nw',
+                    mode: 'zip'
+                },
+                files: [
+                    {src: ['index.html','js/freeboard_plugins.min.js','js/thirdparty.plugins.min.js',
+                        'js/freeboard.thirdparty.min.js', 'css/freeboard.min.css', 'img/*']}
+                ]
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-string-replace');
-    grunt.registerTask('default', [ 'concat:css', 'cssmin:css', 'concat:fb', 'concat:thirdparty', 'concat:plugins', 'concat:fb_plugins', 'concat:thirdparty_plugins', 'uglify:fb', 'uglify:plugins', 'uglify:fb_plugins', 'uglify:thirdparty_plugins','uglify:thirdparty', 'string-replace:css' ]);
+    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.registerTask('default', [ 'concat:css', 'cssmin:css', 'concat:fb', 'concat:thirdparty', 'concat:plugins', 'concat:fb_plugins', 'concat:thirdparty_plugins', 'uglify:fb', 'uglify:plugins', 'uglify:fb_plugins', 'uglify:thirdparty_plugins','uglify:thirdparty', 'string-replace:css',
+    'compress:main'
+    ]);
 };
