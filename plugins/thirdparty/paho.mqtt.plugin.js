@@ -25,7 +25,7 @@
 			{
 				"name"        : "port",
 				"display_name": "Port",
-				"type"        : "number", 
+				"type"        : "integer",
 				"description" : "The port to connect to the MQTT Server on",
 				"required"    : true
 			},
@@ -61,8 +61,9 @@
             	"name"        : "topic",
             	"display_name": "Topic",
             	"type"        : "text",
-            	"description" : "The topic filter to subscribe to",
-            	"required"    : true
+            	"description" : "The topic filters to subscribe to",
+            	"required"    : true,
+                "multi_input" : true
             }
 		],
 		// **newInstance(settings, newInstanceCallback, updateCallback)** (required) : A function that will be called when a new instance of this plugin is requested.
@@ -80,13 +81,14 @@
  		var self = this;
 		var data = {};
 		var currentSettings = settings;
-		// If defined, will show status in color-coded bar on top of the page.
+
+        // If defined, will show status in color-coded bar on top of the page.
 		// If you change the element ID, remember to change the CSS, too.
 		var idStatusElement = "mqttconnectionstatus"+instance;
 		var selectorStatusElement = "#"+idStatusElement;
 
 		function onConnect() {
-		    console.log("Connected");
+		    console.log(currentSettings.instance_name + " Connected");
 		    if (selectorStatusElement) {
 		        $(selectorStatusElement).css('background-color', 'green');
 		        $(selectorStatusElement).animate({
@@ -99,14 +101,20 @@
 		        $(selectorStatusElement).html(currentSettings.instance_name + ' Connected');
 		    }
 		    
-		    client.subscribe(currentSettings.topic);
+		    if (Array.isArray(currentSettings.topic)) {
+                currentSettings.topic.forEach(function(topic) {
+                    client.subscribe(topic)
+                });
+            } else {
+                client.subscribe(currentSettings.topic);
+            }
 		};
 
 		function onFailure(responseObject) {
-		    console.log("Failure");
+		    console.log(currentSettings.instance_name + " failure");
 		    if (selectorStatusElement) {
 		        $(selectorStatusElement).css('background-color', 'red');
-		        $(selectorStatusElement).html('Failed to connect... Retrying.');
+		        $(selectorStatusElement).html(currentSettings.instance_name + ' Failed to connect... Retrying.');
 		        $(selectorStatusElement).animate({
 		            "margin-top": "0px"
 		        });
@@ -118,14 +126,15 @@
 		function onConnectionLost(responseObject) {
 		    if (selectorStatusElement) {
 		        $(selectorStatusElement).css('background-color', 'red');
+		        $(selectorStatusElement).html(currentSettings.instance_name + ' Connection lost... Retrying.');
 		        $(selectorStatusElement).animate({
 		            "margin-top": "-30px"
 		        });
 		    }
 		    if (responseObject.errorCode !== 0)
-		        console.log("onConnectionLost:"+responseObject.errorMessage);
+		        console.log(currentSettings.instance_name + " onConnectionLost:"+responseObject.errorMessage);
 		    else
-		        console.log("onConnectionLost");
+		        console.log(currentSettings.instance_name + " onConnectionLost");
 		    self.doConnect();
 		};
 
@@ -140,13 +149,14 @@
 
 
 		// Allow datasource to post mqtt messages
-		self.send = function(value) {
-			if (client.isConnected()) {
+		self.send = function(value, topic) {
+
+            if (client.isConnected()) {
 				var message;
 				if (typeof(value) == 'boolean') value = value ? 1 : 0;
-				if (typeof(value) == 'object') {
-					message = new Paho.MQTT.Message(String(value.msg));
-					message.destinationName = value.topic;
+				if (typeof(topic) != 'undefined') {
+					message = new Paho.MQTT.Message(String(value));
+					message.destinationName = topic.match(/\[["'](.+?)["']\]/)[1];
 				} else {
 					message = new Paho.MQTT.Message(String(value));
 					message.destinationName = currentSettings.topic;

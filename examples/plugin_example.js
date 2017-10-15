@@ -54,13 +54,15 @@
 				"name"        : "last_name",
 				"display_name": "Last Name",
 				// **type "calculated"** : This is a special text input box that may contain javascript formulas and references to datasources in the freeboard.
-				"type"        : "calculated"
+				"type"        : "calculated",
+                "suffix"      : "xxx"
 			},
             {
                 "name"        : "age",
                 "display_name": "Age",
                 // **type "number"** : A data of a numerical type. Requires the user to enter a numerical value
-                "type"        : "number"
+                "type"        : "number",
+                "suffix"      : "years"
             },
 			{
 				"name"        : "is_human",
@@ -87,6 +89,11 @@
 					}
 				]
 			},
+            {   "name"        : "role",
+                "display_name": "Role",
+                "type"        : "text",
+                "multi_input" : "true"
+            },
 			{
 				"name"        : "other",
 				"display_name": "Other attributes",

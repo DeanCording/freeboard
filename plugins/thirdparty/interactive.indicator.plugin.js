@@ -4,7 +4,7 @@
     freeboard.loadWidgetPlugin({
         type_name: "interactive_indicator",
         display_name: "Interactive Indicator Light",
-        description : "Indicator which can send a value as well as recieve one",
+        description : "Indicator which can send a value as well as receive one",
         settings: [
             {
                 name: "title",
@@ -12,14 +12,20 @@
                 type: "text"
             },
             {
-                name: "value",
-                display_name: "Value",
+                name: "input",
+                display_name: "Input",
                 type: "calculated"
             },
             {
-                name: "callback",
-                display_name: "Datasource to send to",
+                name: "output",
+                display_name: "Output",
                 type: "calculated"
+            },
+            {
+                name: "async",
+                display_name: "Asynchronous",
+                type: "boolean",
+                description: "Status indication is independent of user input"
             },
             {
                 name: "on_text",
@@ -65,8 +71,11 @@
             e.preventDefault()
 
             var new_val = !isOn
-            this.onCalculatedValueChanged('value', new_val);
-            this.sendValue(currentSettings.callback, new_val);
+
+            if (!settings.async) {
+                this.onCalculatedValueChanged('value', new_val);
+            }
+            this.sendValue(currentSettings.output, new_val);
         }
 
 

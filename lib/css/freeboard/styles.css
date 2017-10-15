@@ -510,17 +510,6 @@ body {
 	margin-left: 180px;
 }
 
-.input-suffix {
-	display: inline-block;
-	height: 22px;
-	padding: 4px 10px;
-	line-height: 23px;
-	vertical-align: middle;
-	text-transform: uppercase;
-	font-size: 11px;
-	min-width: 16px;
-}
-
 #plugin-description {
 	margin-bottom: 25px;
 }
@@ -1661,9 +1650,7 @@ ul, ol {
 	float: left;
 }
 
-.form-row:after {
-	content: '';
-	display: block;
+.form-row {
 	clear: both;
 }
 
@@ -1808,6 +1795,19 @@ ul.board-toolbar.vertical {
 	margin-bottom: -10px;
 }
 
+.board-toolbar .input-suffix {
+    color: #8b8b8b;
+	display: inline-block;
+	height: 22px;
+	padding: 4px 10px;
+	line-height: 23px;
+	vertical-align: middle;
+	text-transform: uppercase;
+	font-size: 11px;
+	min-width: 16px;
+}
+
+
 .text-button {
 	color: #B88F51;
 	cursor: pointer;
@@ -1878,12 +1878,12 @@ a:hover.text-button, a:focus.text-button {
 	margin-bottom: 5px;
 }
 
-textarea.calculated-value-input {
-	position: absolute;
+.calculated-value-input {
+    position: absolute;
 	width: 400px;
 	height: 20px;
 	resize: none;
-	white-space: nowrap;
+	white-space: normal;
 	overflow: auto;
 	Z-index: 3000;
 }
@@ -2038,12 +2038,12 @@ h2.title {
 		padding-top: 10px;
 	}
 
-	ul.datasource-input-suffix {
+	.datasource-input-suffix {
 		margin-left: 0px;
 		margin-bottom: 30px;
 	}
 
-	ul.datasource-input-suffix li {
+	.datasource-input-suffix li {
 		margin-left: 0;
 	}
 
@@ -2063,7 +2063,7 @@ h2.title {
 		font-size: 11px;
 	}
 
-	textarea.calculated-value-input {
+	.calculated-value-input {
 		position: inherit;
 		width: 95%;
 	}
