@@ -9,7 +9,10 @@
 
 (function () {
 
-    var ROW_HEIGHT = 45;
+    var ROW_HEIGHT = 35;
+    var PANE_WIDTH = 100;
+    var PANE_MARGIN = 10;
+
 	var SPARKLINE_HISTORY_LENGTH = 100;
 	var SPARKLINE_COLORS = ["#FF9900", "#FFFFFF", "#B3B4B4", "#6B6B6B", "#28DE28", "#13F7F9", "#E6EE18", "#C41204", "#CA3CB8", "#0B1CFB"];
 
@@ -62,7 +65,7 @@
 
 		freeboard.addStyle('.sparkline-legend', "margin:5px;");
 		freeboard.addStyle('.sparkline-legend-value',
-			'color:white; font:10px arial,san serif; float:left; overflow:hidden; width:50%;');
+			'color:white; font:10px arial,san serif; float:left; overflow:hidden; margin-right:10px');
 		freeboard.addStyle('.sparkline-legend-value span',
 			'font-weight:bold; padding-right:5px;');
 	}
@@ -165,7 +168,7 @@
 		'height:100%;');
 
 	freeboard.addStyle('.tw-sparkline',
-		'height:20px;');
+		'height:35px;');
 
     var textWidget = function (settings) {
 
@@ -285,12 +288,13 @@
         }
 
         this.getHeight = function () {
-            if (currentSettings.size == "big" || currentSettings.sparkline) {
-                return 2;
-            }
-            else {
-                return 1;
-            }
+
+            var height = 1;
+            if (currentSettings.size == "big") height++;
+            if (currentSettings.sparkline) height++;
+
+            return height;
+
         }
 
         this.onSettingsChanged(settings);
@@ -299,9 +303,6 @@
     freeboard.loadWidgetPlugin({
         type_name: "text_widget",
         display_name: "Text",
-        "external_scripts" : [
-            "plugins/thirdparty/jquery.sparkline.min.js"
-        ],
         settings: [
             {
                 name: "title",
@@ -352,7 +353,8 @@
 
     var gaugeID = 0;
 	freeboard.addStyle('.gauge-widget-wrapper', "width: 100%;text-align: center;");
-	freeboard.addStyle('.gauge-widget', "width:280px;height:164px;display:inline-block;");
+//	freeboard.addStyle('.gauge-widget', "width:280px;height:164px;display:inline-block;");
+	freeboard.addStyle('.gauge-widget', "width:100%;height:auto;display:inline-block;");
 
     var gaugeWidget = function (settings) {
         var self = this;
@@ -361,6 +363,7 @@
         var titleElement = $('<h2 class="section-title"></h2>');
         var gaugeElement = $('<div class="gauge-widget" id="' + thisGaugeID + '"></div>');
 
+        var widgetElement;
         var gaugeObject;
         var rendered = false;
 
@@ -387,19 +390,14 @@
 
         this.render = function (element) {
             rendered = true;
+            widgetElement = element;
             $(element).append(titleElement).append($('<div class="gauge-widget-wrapper"></div>').append(gaugeElement));
             createGauge();
         }
 
         this.onSettingsChanged = function (newSettings) {
-            if (newSettings.min_value != currentSettings.min_value || newSettings.max_value != currentSettings.max_value || newSettings.units != currentSettings.units) {
-                currentSettings = newSettings;
-                createGauge();
-            }
-            else {
-                currentSettings = newSettings;
-            }
-
+            currentSettings = newSettings;
+            createGauge();
             titleElement.html(newSettings.title);
         }
 
@@ -412,8 +410,14 @@
         this.onDispose = function () {
         }
 
+        this.onSizeChanged = function() {
+            createGauge();
+        }
+
         this.getHeight = function () {
-            return 4;
+            var height = Math.max(2, Math.ceil($(widgetElement).height() / ROW_HEIGHT));
+            console.log(widgetElement);
+            return 5;
         }
 
         this.onSettingsChanged(settings);
@@ -422,11 +426,15 @@
     freeboard.loadWidgetPlugin({
         type_name: "gauge",
         display_name: "Gauge",
-        "external_scripts" : [
-            "plugins/thirdparty/raphael.js",
-            "plugins/thirdparty/justgage.js"
-        ],
         settings: [
+            {
+                name: "width",
+                display_name: "Width",
+                type: "integer",
+                default_value: 1,
+                suffix: "columns",
+                required: true,
+            },
             {
                 name: "title",
                 display_name: "Title",
@@ -461,7 +469,7 @@
     });
 
 
-	freeboard.addStyle('.sparkline', "width:100%;height: 75px;");
+	freeboard.addStyle('.sparkline', "width:100%;height: 89px;");
     var sparklineWidget = function (settings) {
         var self = this;
 
@@ -481,6 +489,10 @@
 			if(newSettings.include_legend) {
 				addSparklineLegend(sparklineLegend,  newSettings.legend.split(","));
 			}
+
+			var graphHeight = 4 * ROW_HEIGHT - titleElement.height() - sparklineLegend.height();
+
+			sparklineElement.css("height", graphHeight);
         }
 
         this.onCalculatedValueChanged = function (settingName, newValue) {
@@ -495,16 +507,7 @@
         }
 
         this.getHeight = function () {
-			var legendHeight = 0;
-			if (currentSettings.include_legend && currentSettings.legend) {
-				var legendLength = currentSettings.legend.split(",").length;
-				if (legendLength > 4) {
-					legendHeight = Math.floor((legendLength-1) / 4) * 0.5;
-				} else if (legendLength) {
-					legendHeight = 0.5;
-				}
-			}
-			return 2 + legendHeight;
+			return 4;
         }
 
         this.onSettingsChanged(settings);
@@ -513,9 +516,6 @@
     freeboard.loadWidgetPlugin({
         type_name: "sparkline",
         display_name: "Sparkline",
-        "external_scripts" : [
-            "plugins/thirdparty/jquery.sparkline.min.js"
-        ],
         settings: [
             {
                 name: "title",
@@ -624,9 +624,6 @@
     freeboard.loadWidgetPlugin({
         type_name: "pointer",
         display_name: "Pointer",
-        "external_scripts" : [
-            "plugins/thirdparty/raphael.js"
-        ],
         settings: [
             {
                 name: "direction",
@@ -1044,7 +1041,7 @@
                 "display_name": "Height Blocks",
                 "type": "number",
                 "default_value": 4,
-                "description": "A height block is around 60 pixels"
+                "description": "A height block is 35 pixels"
             }
         ],
         newInstance: function (settings, newInstanceCallback) {

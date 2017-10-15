@@ -66,6 +66,7 @@ module.exports = function(grunt) {
                     'plugins/thirdparty/interactive.indicator.plugin.js',
                     'plugins/thirdparty/osinfos.datasources.js',
                     'plugins/thirdparty/html.widgets.js',
+
                 ],
                 dest : 'js/thirdparty.plugins.js'
             },

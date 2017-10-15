@@ -758,7 +758,7 @@ a:focus {
 
 .gridster header {
 	background-color: #272727;
-	height: 25px;
+	height: 30px;
 	margin: 0;
 	padding: 0 10px 0 10px;
 	color: #8b8b8b;
@@ -1687,7 +1687,6 @@ input.table-row-value {
 }
 
 ul.value-dropdown {
-	height: 75px;
 	position: absolute;
 	padding: 0px;
 	margin: 0px;
@@ -1763,7 +1762,7 @@ ul.board-toolbar.vertical {
 	cursor: pointer;
 	margin: 0px 0px 0px 5px;
 	background-color: rgba(75, 75, 75, 0.0);
-	padding: 8px;
+	padding: 8px 2px 8px 2px;
 	height: 14px;
 }
 

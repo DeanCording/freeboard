@@ -270,7 +270,7 @@
 
 		// **getHeight()** (required) : A public function we must implement that will be called when freeboard wants to know how big we expect to be when we render, and returns a height. This function will be called any time a user updates their settings (including the first time they create the widget).
 		//
-		// Note here that the height is not in pixels, but in blocks. A block in freeboard is currently defined as a rectangle that is fixed at 300 pixels wide and around 45 pixels multiplied by the value you return here.
+		// Note here that the height is not in pixels, but in blocks. A block in freeboard is currently defined as a rectangle that is fixed at 100 pixels wide and around 35 pixels multiplied by the value you return here.
 		//
 		// Blocks of different sizes may be supported in the future.
 		self.getHeight = function()
@@ -284,6 +284,12 @@
 				return 1;
 			}
 		}
+
+		// **onSizeChanged()** (optional): A public function we can implement that will be called when a user changes the width of a pane.
+
+		self.onSizeChanged = function() {
+
+        }
 
 		// **onSettingsChanged(newSettings)** (required) : A public function we must implement that will be called when a user makes a change to the settings.
 		self.onSettingsChanged = function(newSettings)
