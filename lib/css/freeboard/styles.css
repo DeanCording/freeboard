@@ -822,6 +822,14 @@ header h1 {
 	margin-bottom: 7px;
 }
 
+.widgets {
+    -webkit-padding-start: 0;
+    -moz-padding-start: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-context: flex-start;
+}
+
 .widget {
 	padding: 1px 10px 1px 10px;
 	height: 100%;
@@ -914,6 +922,7 @@ header h1 {
 	border-bottom: solid 1px #363636;
 	position: relative;
 	overflow: hidden;
+    display: inline-block;
 }
 
 .sub-section-height-1 {
@@ -931,6 +940,25 @@ header h1 {
 .sub-section-height-4 {
 	height: 180px;
 }
+
+.sub-section-width-1 {
+    width: 100px;
+}
+
+.sub-section-width-2 {
+    width: 200px;
+}
+
+.sub-section-width-3 {
+    width: 300px;
+}
+
+.sub-section-width-4 {
+    width: 400px;
+}
+
+
+
 
 .sub-section:last-of-type {
 	border-bottom: none;

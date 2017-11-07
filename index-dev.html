@@ -40,7 +40,6 @@
 
                 "plugins/freeboard/freeboard.datasources.js",
                 "plugins/freeboard/freeboard.widgets.js",
-                "examples/plugin_example.js",
                 "plugins/thirdparty/ibm.iotfoundation.plugin.js",
                 "plugins/thirdparty/paho.mqtt.plugin.js",
                 "plugins/thirdparty/justgage.js",
@@ -199,8 +198,8 @@
                 </li>
             </ul>
         </header>
-        <section data-bind="foreach: widgets">
-            <div class="sub-section" data-bind="css: 'sub-section-height-' + height()">
+        <ul class="widgets" data-bind="foreach: widgets">
+            <li class="sub-section" data-bind="css: 'sub-section-height-' + height() + ' sub-section-width-' + width()">
                 <div class="widget" data-bind="widget: true, css:{fillsize:fillSize}"></div>
                 <div class="sub-section-tools">
                     <ul class="board-toolbar">
@@ -214,8 +213,8 @@
                         <li data-bind="pluginEditor: {operation: 'delete', type: 'widget'}"><i class="icon-trash icon-white"></i></li>
                     </ul>
                 </div>
-            </div>
-        </section>
+            </li
+        </ul>
     </li>
 </script>
 
