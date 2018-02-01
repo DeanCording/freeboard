@@ -775,16 +775,6 @@ header h1 {
 	line-height: 25px;
 }
 
-.gridster section {
-	line-height: normal;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
 
 #board-content {
 	overflow: visible;
@@ -796,40 +786,92 @@ header h1 {
 	width: 100%;
 	position: fixed;
 	z-index: 50;
-	display: none;
+	display: block;
 }
 
 #admin-bar {
 	background-color: #313131;
-	width: 100%;
-	height: 200px;
-	position: relative;
+	position: absolute;
+    bottom: -500px;
+    z-index: 45;
 	-webkit-box-shadow: 0 0 5px #000;
 	box-shadow: 0 0 5px #000;
     overflow: hidden;
 }
 
-#toggle-header {
-	float: right;
+#toggle-menu {
 	width: 50px;
 	background-color: #313131;
 	text-align: center;
 	cursor: pointer;
+    display: inline;
 }
 
-#toggle-header-icon {
-	margin-top: 4px;
-	margin-bottom: 7px;
+
+#footer-bar {
+	position:fixed;
+	bottom:0;
+	left:0;
+	z-index:50;
+	width:100%;
+	height:auto;
+	background-color:#313131;
+	-webkit-box-shadow:0 0 5px #000;
+	box-shadow:0 0 5px #000
 }
 
-.widgets {
-    -webkit-padding-start: 0;
-    -moz-padding-start: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-context: flex-start;
+#footer-menu {
+	padding-right:10px;
+	padding-left:10px;
+	margin:0 auto;
+    height: auto;
+    width: 100%;
 }
 
+#footer-logo.title.bordered {
+	padding:3px 8px;
+	font-size:12px;
+	line-height:18px;
+	border-width:2px
+}
+
+#board-content {
+	padding-bottom:50px
+}
+
+#board-title {
+	display:inline;
+	max-width:80%;
+	padding-left:20px;
+	overflow:hidden;
+	font-family:Arial,sans-serif;
+	font-size:20px;
+	font-weight:100;
+	line-height:50px;
+	color:#d3d4d4;
+	text-overflow:ellipsis;
+	text-transform:uppercase;
+	white-space:nowrap;
+    vertical-align: middle;
+}
+
+#footer-toolbar {
+	position:absolute;
+	top:11px;
+	right:0
+}
+
+
+#dev-console {
+	font-size:9px;
+	color:#575656
+}
+
+.dev-console-bar {
+	position:absolute;
+	top:11px;
+	right:11px
+}
 .widget {
 	padding: 1px 10px 1px 10px;
 	height: 100%;
@@ -837,10 +879,6 @@ header h1 {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-}
-
-.widget.fillsize {
-	padding: 0;
 }
 
 .pane-tools {
@@ -869,11 +907,6 @@ header h1 {
 	cursor: pointer;
 }
 
-#board-tools {
-	width: 50%;
-	float: left;
-}
-
 .table thead th {
 	font-size: 10px;
 	text-shadow: none;
@@ -896,14 +929,11 @@ header h1 {
 }
 
 #admin-menu {
-	left: 0px;
-	right: 0px;
-	width: 950px;
-	top: 20px;
+	width: 100%;
 	margin: 0px auto;
 	padding-left: 10px;
 	padding-right: 10px;
-	position: absolute;
+/*	position: absolute; */
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -957,13 +987,6 @@ header h1 {
     width: 400px;
 }
 
-
-
-
-.sub-section:last-of-type {
-	border-bottom: none;
-}
-
 #pump-icon {
 	padding: 10px;
 	padding-bottom: 12px;
@@ -992,50 +1015,7 @@ ul, ol {
 	list-style: none;
 }
 
-#column-tools {
-	position: relative;
-	display: none;
-	margin: 0 auto;
-	left: 0;
-	right: 0;
-	top: 5px;
-}
-
-#column-tools .left-columns {
-	position: absolute;
-	left: 0;
-}
-
-#column-tools .right-columns {
-	position: absolute;
-	right: 0;
-}
-
-.column-tool {
-	cursor: pointer;
-}
-
-.column-tool.min.sub, .column-tool.max.add {
-	display: none;
-}
-
-.column-icon {
-	display: inline-block;
-	background-color: white;
-	width: 5px;
-	height: 100%;
-}
-
-.column-icon.right {
-	float: right;
-}
-
-.column-icon.left {
-	float: left;
-}
-
 .gridster {
-	max-width: 960px;
 	margin: 0 auto;
 	left: 0;
 	right: 0;
@@ -1054,6 +1034,11 @@ ul, ol {
 	-moz-user-select: text;
 	-ms-user-select: text;
 	user-select: text;
+}
+
+.gridster ul, .gridster li {
+    -webkit-padding-start: 0;
+    -moz-padding-start: 0;
 }
 
 .gridster .preview-holder {
@@ -1928,7 +1913,8 @@ ul.datasource-input-suffix {
 	height: 30px;
 	-webkit-appearance: none;
 	border: 1px solid #3d3d3d;
-	background: url(../../../img/dropdown-arrow.png) no-repeat right #272727;
+   	background-image: url("../../../img/glyphicons-halflings-white.png");
+    background-position: -312px -96px;
 }
 
 .title {
@@ -2027,6 +2013,14 @@ h2.title {
 	#board-logo {
 		float: left;
 	}
+
+	#dev-console {
+        display:none
+    }
+
+    #full-screen-action {
+        display:none
+    }
 
 	.modal header {
 		height: 30px;

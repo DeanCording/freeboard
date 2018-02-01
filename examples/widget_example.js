@@ -7,8 +7,7 @@
 // -------------------
 
 // Best to encapsulate your plugin in a closure, although not required.
-(function()
-{
+(function() {
 	// ## A Widget Plugin
 	//
 	// -------------------
@@ -50,8 +49,7 @@
 			}
 		],
 		// Same as with datasource plugin, but there is no updateCallback parameter in this case.
-		newInstance   : function(settings, newInstanceCallback)
-		{
+		newInstance   : function(settings, newInstanceCallback)	{
 			newInstanceCallback(new myWidgetPlugin(settings));
 		}
 	});
@@ -60,8 +58,7 @@
 	//
 	// -------------------
 	// Here we implement the actual widget plugin. We pass in the settings;
-	var myWidgetPlugin = function(settings)
-	{
+	var myWidgetPlugin = function(settings)	{
 		var self = this;
 		var currentSettings = settings;
 
@@ -69,8 +66,7 @@
 		var myTextElement = $("<span></span>");
 
 		// **render(containerElement)** (required) : A public function we must implement that will be called //when freeboard wants us to render the contents of our widget. The container element is the DIV that will surround the widget.
-		self.render = function(containerElement)
-		{
+		self.render = function(containerElement) {
 			// Here we append our text element to the widget container element.
 			$(containerElement).append(myTextElement);
 		}
@@ -78,14 +74,11 @@
 		// **getHeight()** (required) : A public function we must implement that will be called when freeboard wants to know how big we expect to be when we render, and returns a height. This function will be called any time a user updates their settings (including the first time they create the widget).
 		//
 		// Note here that the height is not in pixels, but in blocks.
-		self.getHeight = function()
-		{
-			if(currentSettings.size == "big")
-			{
+		self.getHeight = function()	{
+			if(currentSettings.size == "big") {
 				return 2;
 			}
-			else
-			{
+			else {
 				return 1;
 			}
 		}
@@ -93,14 +86,11 @@
 		// **getWidth()** (required) : A public function we must implement that will be called when freeboard wants to know how big we expect to be when we render, and returns a width. This function will be called any time a user updates their settings (including the first time they create the widget).
 		//
 		// Note here that the width is not in pixels, but in blocks.
-		self.getWidth = function()
-		{
-			if(currentSettings.size == "big")
-			{
+		self.getWidth = function() {
+			if(currentSettings.size == "big") {
 				return 2;
 			}
-			else
-			{
+			else{
 				return 1;
 			}
 		}
@@ -112,26 +102,22 @@
         }
 
 		// **onSettingsChanged(newSettings)** (required) : A public function we must implement that will be called when a user makes a change to the settings.
-		self.onSettingsChanged = function(newSettings)
-		{
+		self.onSettingsChanged = function(newSettings) {
 			// Normally we'd update our text element with the value we defined in the user settings above (the_text), but there is a special case for settings that are of type **"calculated"** -- see below.
 			currentSettings = newSettings;
 		}
 
 		// **onCalculatedValueChanged(settingName, newValue)** (required) : A public function we must implement that will be called when a calculated value changes. Since calculated values can change at any time (like when a datasource is updated) we handle them in a special callback function here.
-		self.onCalculatedValueChanged = function(settingName, newValue)
-		{
+		self.onCalculatedValueChanged = function(settingName, newValue)	{
 			// Remember we defined "the_text" up above in our settings.
-			if(settingName == "the_text")
-			{
+			if(settingName == "the_text"){
 				// Here we do the actual update of the value that's displayed in on the screen.
 				$(myTextElement).html(newValue);
 			}
 		}
 
-		// **onDispose()** (required) : Same as with datasource plugins.
-		self.onDispose = function()
-		{
+		// **onDispose()** (required) : A public function we must implement that will be called when this instance of this plugin is no longer needed. Do anything you need to cleanup after yourself here.
+		self.onDispose = function() {
 		}
 	}
 }());

@@ -12,10 +12,9 @@
 	<link href="lib/css/thirdparty/codemirror.css" rel="stylesheet" />
 	<link href="lib/css/thirdparty/codemirror-ambiance.css" rel="stylesheet" />
     <link href="lib/css/freeboard/styles.css" rel="stylesheet" />
-    <link href="lib/css/freeboard/index.css" rel="stylesheet">
     <script src="lib/js/thirdparty/head.js"></script>
     <script type="text/javascript">
-        head.js("lib/js/thirdparty/knockout.js",
+        head.js("lib/js/thirdparty/knockout-3.4.2.debug.js",
                 "lib/js/thirdparty/jquery.js",
 
                 "lib/js/thirdparty/jquery-ui.js",
@@ -34,7 +33,7 @@
                 "lib/js/freeboard/PluginEditor.js",
                 "lib/js/freeboard/ValueEditor.js",
                 "lib/js/freeboard/JSEditor.js",
-                "lib/js/freeboard/DeveloperConsole.js",
+                "lib/js/freeboard/Settings.js",
                 "lib/js/freeboard/freeboard.js",
                 "lib/js/freeboard/index.js",
 
@@ -53,133 +52,35 @@
                 "plugins/thirdparty/html.widgets.js",
                 "plugins/thirdparty/jquery.sparkline.min.js",
 
+                "examples/widget_example.js",
+
                 // *** Load more plugins here ***
                 function(){
                     $(function()
                     { //DOM Ready
                         freeboard.initialize(true);
-
-                        var hashpattern = window.location.hash.match(/(&|#)source=([^&]+)/);
-                        if (hashpattern !== null) {
-                            $.getJSON(hashpattern[2], function(data) {
-                                freeboard.loadDashboard(data, function() {
-                                    freeboard.setEditing(false);
-                                });
-                            });
-                        }
-
                     });
                 });
     </script>
 </head>
 <body>
+
+<header id="main-header" >
+
+</header>
+
 <div id="board-content">
     <img id="dash-logo" data-bind="attr:{src: header_image}, visible:header_image()">
     <div class="gridster responsive-column-width">
-        <ul data-bind="grid: true">
+        <ul id="dashboardGrid">
         </ul>
     </div>
 </div>
-<header id="main-header" data-bind="if:allow_edit">
-    <div id="admin-bar">
-        <div id="admin-menu">
-            <div id="board-tools">
-                <h1 id="board-logo" class="title bordered">freeboard</h1>
-                <div id="board-actions">
-                    <ul class="board-toolbar vertical">
-                        <li data-bind="click: clearDashboard">
-                            <i class="icon-file icon-white"></i>
-                            <label id="new-dashboard">New Dashboard</label>
-                        </li>
-                        <li data-bind="click: loadDashboardFromLocalFile">
-                            <i class="icon-folder-open icon-white"></i>
-                            <label id="load-dashboard">Load Dashboard</label>
-                        </li>
-                        <li><i class="icon-download-alt icon-white"></i>
-                            <label data-bind="click: saveDashboardClicked">Save Dashboard</label>
-                            <label style="display: none;" data-bind="click: saveDashboard" data-pretty="true">[Pretty]</label>
-                            <label style="display: none;" data-bind="click: saveDashboard" data-pretty="false">[Minified]</label>
-                        </li>
-                    </ul>
-                    <ul class="board-toolbar vertical">
-                        <li id="dev-console-toolbar"><i style="background-image:url(img/glyphicons-blackboard.png);width:14px;height:14px"></i><label onclick="freeboard.showDeveloperConsole()">Developer Console</label></li>
-                        <li id="add-pane" data-bind="click: createPane"><i class="icon-plus icon-white">
-                        </i><label>Add Pane</label></li>
-                   </ul>
-                </div>
-            </div>
-            <div id="datasources">
-                <h2 class="title">DATASOURCES</h2>
 
-                <div class="datasource-list-container">
-                    <table class="table table-condensed sub-table" id="datasources-list" data-bind="if: datasources().length">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Last Updated</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                        </thead>
-                        <tbody data-bind="foreach: datasources">
-                        <tr>
-                            <td>
-                                <span class="text-button datasource-name" data-bind="text: name, pluginEditor: {operation: 'edit', type: 'datasource'}"></span>
-                            </td>
-                            <td data-bind="text: last_updated"></td>
-                            <td>
-                                <ul class="board-toolbar">
-                                    <li data-bind="click: updateNow"><i class="icon-refresh icon-white"></i></li>
-                                    <li data-bind="pluginEditor: {operation: 'delete', type: 'datasource'}">
-                                        <i class="icon-trash icon-white"></i></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <span class="text-button table-operation" data-bind="pluginEditor: {operation: 'add', type: 'datasource'}">ADD</span>
-            </div>
-        </div>
-    </div>
-	<div id="column-tools" class="responsive-column-width">
-		<ul class="board-toolbar left-columns">
-			<li class="column-tool add" data-bind="click: addGridColumnLeft"><span class="column-icon right"></span><i class="icon-arrow-left icon-white"></i></li>
-			<li class="column-tool sub" data-bind="click: subGridColumnLeft"><span class="column-icon left"></span><i class="icon-arrow-right icon-white"></i></li>
-		</ul>
-		<ul class="board-toolbar right-columns">
-			<li class="column-tool sub" data-bind="click: subGridColumnRight"><span class="column-icon right"></span><i class="icon-arrow-left icon-white"></i></li>
-			<li class="column-tool add" data-bind="click: addGridColumnRight"><span class="column-icon left"></span><i class="icon-arrow-right icon-white"></i></li>
-		</ul>
-	</div>
-    <div id="toggle-header" data-bind="click: toggleEditing">
-        <i id="toggle-header-icon" class="icon-wrench icon-white"></i>
-	</div>
-</header>
-
-<div style="display:hidden" >
+<!-- Workaround to avoid issue with Gridster moving elements whilst Knockout is processing bindings. -->
+<div style="display:none">
     <ul data-bind="template: { name: 'pane-template', foreach: panes}">
     </ul>
-</div>
-
-<div id="footer-bar">
-    <div id="footer-menu">
-        <a href="/account"><h3 id="footer-logo" class="title bordered">freeboard</h3></a>
-        <div id="board-title">Tutorial</div>
-        <ul id="footer-toolbar" class="board-toolbar">
-            <li id="full-screen-action" onclick="toggleFullScreen()">
-                <i id="full-screen-icon" class="icon-resize-full icon-white"></i>
-                <label id="full-screen">Fullscreen</label>
-            </li>
-            <li id="share-action">
-                <i class="icon-user icon-white"></i>
-                <label>Share</label>
-            </li>
-            <li id="clone-action">
-                <i class="icon-adjust icon-white"></i>
-                <label>Clone</label>
-            </li>
-        </ul>
-    </div>
 </div>
 
 <script type="text/html" id="pane-template">
@@ -198,25 +99,119 @@
                 </li>
             </ul>
         </header>
-        <ul class="widgets" data-bind="foreach: widgets">
-            <li class="sub-section" data-bind="css: 'sub-section-height-' + height() + ' sub-section-width-' + width()">
-                <div class="widget" data-bind="widget: true, css:{fillsize:fillSize}"></div>
-                <div class="sub-section-tools">
-                    <ul class="board-toolbar">
-                        <!-- ko if:$parent.widgetCanMoveUp($data) -->
-                        <li data-bind="click:$parent.moveWidgetUp"><i class="icon-chevron-up icon-white"></i></li>
-                        <!-- /ko -->
-                        <!-- ko if:$parent.widgetCanMoveDown($data) -->
-                        <li data-bind="click:$parent.moveWidgetDown"><i class="icon-chevron-down icon-white"></i></li>
-                        <!-- /ko -->
-                        <li data-bind="pluginEditor: {operation: 'edit', type: 'widget'}"><i class="icon-wrench icon-white"></i></li>
-                        <li data-bind="pluginEditor: {operation: 'delete', type: 'widget'}"><i class="icon-trash icon-white"></i></li>
-                    </ul>
-                </div>
-            </li
-        </ul>
+        <div class="gridster">
+            <ul class="widgets" data-bind="attr: {'id': paneId }">
+            </ul>
+        </div>
+        <!-- Workaround to avoid issue with Gridster moving elements whilst Knockout is processing bindings. -->
+        <dev style="display:hidden">
+            <ul data-bind="template: {name: 'widget-template', foreach:widgets}">
+            </ul>
+        </div>
     </li>
 </script>
+
+
+<script type="text/html" id="widget-template">
+    <li class="sub-section" data-bind="widget: true, css: 'sub-section-height-' + height() + ' sub-section-width-' + width()">
+        <div class="widget"></div>
+        <div class="sub-section-tools">
+            <ul class="board-toolbar">
+                <li data-bind="pluginEditor: {operation: 'edit', type: 'widget'}"><i class="icon-wrench icon-white"></i></li>
+                <li data-bind="pluginEditor: {operation: 'delete', type: 'widget'}"><i class="icon-trash icon-white"></i></li>
+            </ul>
+        </div>
+    </li>
+</script>
+
+       <!--div id="datasources">
+            <h2 class="title">DATASOURCES</h2>
+
+            <div class="datasource-list-container">
+                <table class="table table-condensed sub-table" id="datasources-list" data-bind="if: datasources().length">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Last Updated</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody data-bind="foreach: datasources">
+                    <tr>
+                        <td>
+                            <span class="text-button datasource-name" data-bind="text: name, pluginEditor: {operation: 'edit', type: 'datasource'}"></span>
+                        </td>
+                        <td data-bind="text: last_updated"></td>
+                        <td>
+                            <ul class="board-toolbar">
+                                <li data-bind="click: updateNow"><i class="icon-refresh icon-white"></i></li>
+                                <li data-bind="pluginEditor: {operation: 'delete', type: 'datasource'}">
+                                    <i class="icon-trash icon-white"></i></li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <span class="text-button table-operation" data-bind="pluginEditor: {operation: 'add', type: 'datasource'}">ADD</span>
+        </div-->
+
+
+<div id="admin-bar" style="display: none" data-bind="if:allow_edit">
+    <div id="admin-menu" data-bind="click: toggleMenu">
+        <div id="board-tools">
+            <div id="board-actions">
+                <ul class="board-toolbar vertical">
+                    <li data-bind="click: clearDashboard">
+                        <i class="icon-file icon-white"></i>
+                        <label id="new-dashboard">New Dashboard</label>
+                    </li>
+                    <li data-bind="click: loadDashboardFromLocalFile">
+                        <i class="icon-folder-open icon-white"></i>
+                        <label id="load-dashboard">Load Dashboard</label>
+                    </li>
+                    <li><i class="icon-download-alt icon-white"></i>
+                        <label data-bind="click: saveDashboardClicked">Save Dashboard</label>
+                        <label style="display: none;" data-bind="click: saveDashboard" data-pretty="true">[Pretty]</label>
+                        <label style="display: none;" data-bind="click: saveDashboard" data-pretty="false">[Minified]</label>
+                    </li>
+                    <li id="settings">
+                        <i class="icon-wrench icon-white"></i>
+                        <label onclick="freeboard.showSettings()">Dashboard Settings</label>
+                    </li>
+                    <li id="datasources-settings" data-bind="">
+                        <i class="icon-hdd icon-white"></i>
+                        <label>Datasources</label>
+                    </li>
+                    <li id="edit-dashboard" data-bind="click: toggleEditing">
+                        <i class="icon-edit icon-white"></i>
+                        <label>Edit Dashboard</label>
+                    </li>
+                    <li id="full-screen-action" onclick="toggleFullScreen()">
+                        <i id="full-screen-icon" class="icon-resize-full icon-white"></i>
+                        <label id="full-screen">Fullscreen</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="footer-bar">
+    <div id="footer-menu">
+        <div id="toggle-menu" onclick="freeboardUI.toggleMenu()">
+            <i id="toggle-menu-icon" class="icon-list icon-white"></i>
+        </div>
+        <h3 id="footer-logo" class="title bordered">freeboard2</h3>
+        <div id="board-title">Tutorial</div>
+        <ul id="footer-toolbar" class="board-toolbar">
+            <li id="add-pane" data-bind="click: createPane">
+                <i class="icon-plus icon-white"></i>
+                <label>Add Pane</label>
+            </li>
+        </ul>
+    </div>
+</div>
 
 </body>
 </html>
