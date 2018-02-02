@@ -395,18 +395,6 @@ textarea {
 	vertical-align: top; /* 2 */
 }
 
-/* ==========================================================================
-   Tables
-   ========================================================================== */
-
-/**
- * Remove most spacing between table cells.
- */
-
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
 
 /* ==========
 freeboard
@@ -720,7 +708,7 @@ table {
 
 .table-condensed th,
 .table-condensed td {
-	padding: 2px 5px;
+	padding: 2px 0px;
 }
 
 a:focus {

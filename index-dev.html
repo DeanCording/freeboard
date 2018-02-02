@@ -181,7 +181,7 @@
                     </li>
                     <li id="settings">
                         <i class="icon-wrench icon-white"></i>
-                        <label onclick="freeboard.showSettings()">Dashboard Settings</label>
+                        <label onclick="freeboard.showSettings()">Settings</label>
                     </li>
                     <li id="datasources-settings" onclick="freeboardUI.showDatasources()">
                         <i class="icon-hdd icon-white"></i>
@@ -189,7 +189,7 @@
                     </li>
                     <li id="edit-dashboard" data-bind="click: toggleEditing">
                         <i class="icon-edit icon-white"></i>
-                        <label>Edit Dashboard</label>
+                        <label>Edit</label>
                     </li>
                     <li id="full-screen-action" onclick="toggleFullScreen()">
                         <i id="full-screen-icon" class="icon-resize-full icon-white"></i>
@@ -207,7 +207,7 @@
             <i id="toggle-menu-icon" class="icon-list icon-white"></i>
         </div>
         <h3 id="footer-logo" class="title bordered">freeboard2</h3>
-        <div id="board-title">Tutorial</div>
+        <div id="board-title" data-bind="text: dashboardName"></div>
         <ul id="footer-toolbar" class="board-toolbar">
             <li id="add-pane" data-bind="click: createPane">
                 <i class="icon-plus icon-white"></i>
