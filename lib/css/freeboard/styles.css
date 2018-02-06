@@ -767,7 +767,6 @@ header h1 {
 #board-content {
 	overflow: visible;
 	position: relative;
-	padding-top: 10px;
 }
 
 #main-header {
@@ -788,7 +787,11 @@ header h1 {
 }
 
 #toggle-menu {
-	width: 50px;
+	width: 60px;
+    padding-top: 10px;
+    padding-right: 6px;
+    padding-bottom: 10px;
+    padding-left: 10px;
 	background-color: #313131;
 	text-align: center;
 	cursor: pointer;
@@ -810,7 +813,6 @@ header h1 {
 
 #footer-menu {
 	padding-right:10px;
-	padding-left:10px;
 	margin:0 auto;
     height: auto;
     width: 100%;
@@ -821,10 +823,6 @@ header h1 {
 	font-size:12px;
 	line-height:18px;
 	border-width:2px
-}
-
-#board-content {
-	padding-bottom:50px
 }
 
 #board-title {

@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>freeboard</title>
+    <title>freeboard2</title>
 	<meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -63,14 +63,13 @@
                 });
     </script>
 </head>
-<body>
+<body onclick="freeboardUI.closeMenu(event)">
 
 <header id="main-header" >
-
+    <img id="dash-logo" data-bind="attr:{src: header_image}, visible:header_image()">
 </header>
 
 <div id="board-content">
-    <img id="dash-logo" data-bind="attr:{src: header_image}, visible:header_image()">
     <div class="gridster responsive-column-width">
         <ul id="dashboardGrid">
         </ul>
@@ -84,7 +83,7 @@
 </div>
 
 <script type="text/html" id="pane-template">
-    <li data-bind="pane: true">
+    <li data-bind="pane: true" class="pane">
         <header>
             <h1 data-bind="text: title"></h1>
             <ul class="board-toolbar pane-tools">
@@ -174,14 +173,15 @@
                         <i class="icon-folder-open icon-white"></i>
                         <label id="load-dashboard">Load Dashboard</label>
                     </li>
-                    <li><i class="icon-download-alt icon-white"></i>
-                        <label data-bind="click: saveDashboardClicked">Save Dashboard</label>
-                        <label style="display: none;" data-bind="click: saveDashboard" data-pretty="true">[Pretty]</label>
-                        <label style="display: none;" data-bind="click: saveDashboard" data-pretty="false">[Minified]</label>
+                    <li id="save-dashboard" onclick="freeboardUI.saveDashboardClicked(event)">
+                        <i class="icon-download-alt icon-white"></i>
+                        <label>Save Dashboard</label>
+                        <label class="save-option" style="display: none;" data-bind="click: saveDashboard" data-pretty="true">[Pretty]</label>
+                        <label class="save-option" style="display: none;" data-bind="click: saveDashboard" data-pretty="false">[Minified]</label>
                     </li>
-                    <li id="settings">
+                    <li id="settings" onclick="freeboard.showSettings()">
                         <i class="icon-wrench icon-white"></i>
-                        <label onclick="freeboard.showSettings()">Settings</label>
+                        <label>Settings</label>
                     </li>
                     <li id="datasources-settings" onclick="freeboardUI.showDatasources()">
                         <i class="icon-hdd icon-white"></i>
@@ -203,7 +203,7 @@
 
 <div id="footer-bar">
     <div id="footer-menu">
-        <div id="toggle-menu" onclick="freeboardUI.toggleMenu()">
+        <div id="toggle-menu" onclick="freeboardUI.toggleMenu(event)">
             <i id="toggle-menu-icon" class="icon-list icon-white"></i>
         </div>
         <h3 id="footer-logo" class="title bordered">freeboard2</h3>
