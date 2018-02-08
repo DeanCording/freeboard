@@ -1,6 +1,7 @@
 // ┌────────────────────────────────────────────────────────────────────┐ \\
-// │ F R E E B O A R D                                                  │ \\
+// │ F R E E B O A R D 2                                                │ \\
 // ├────────────────────────────────────────────────────────────────────┤ \\
+// │ Copyright © 2018 Dean Cording (https://github.com/DeanCording)     │ \\
 // │ Copyright © 2013 Jim Heising (https://github.com/jheising)         │ \\
 // │ Copyright © 2013 Bug Labs, Inc. (http://buglabs.net)               │ \\
 // ├────────────────────────────────────────────────────────────────────┤ \\
